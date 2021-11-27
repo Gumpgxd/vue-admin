@@ -1,4 +1,12 @@
-import { AxiosResponse, AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+
+interface IAxiosConfig extends AxiosRequestConfig {
+    showLoading?:boolean
+}
+
+interface IAxiosResponse  extends AxiosResponse {
+    showLoading?:boolean
+}
 
 // 网络请求响应格式，T 是具体的接口返回类型数据
 interface CustomSuccessData<T> {
@@ -10,25 +18,27 @@ interface CustomSuccessData<T> {
 
 
 interface Get {
-    <T>(url: string, config?: AxiosRequestConfig): Promise<CustomSuccessData<T>>
+    <T>(url: string, config?: IAxiosConfig): Promise<CustomSuccessData<T>>
 }
 
 interface Post {
-    <T>(url: string, params?: string | object, config?: AxiosRequestConfig): Promise<CustomSuccessData<T>>;
+    <T>(url: string, params?: string | object, config?: IAxiosConfig): Promise<CustomSuccessData<T>>;
 }
 
 interface Delete {
-    <T>(url: string, params?: string | object, config?: AxiosRequestConfig): Promise<CustomSuccessData<T>>
+    <T>(url: string, params?: string | object, config?: IAxiosConfig): Promise<CustomSuccessData<T>>
 }
 
 interface Put {
-    <T>(url: string, params?: string | object, config?: AxiosRequestConfig): Promise<CustomSuccessData<T>>
+    <T>(url: string, params?: string | object, config?: IAxiosConfig): Promise<CustomSuccessData<T>>
 }
 
 
 
 export {
     CustomSuccessData,
+    IAxiosConfig,
+    IAxiosResponse,
     Get,
     Post,
     Delete,
