@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { IAxiosConfig,IAxiosResponse } from '../type/types'
 import { ElLoading, ElMessage } from 'element-plus'
 import store from './../store/index'
 
@@ -41,13 +41,13 @@ if (process.env.NODE_ENV == 'development') {
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 //路由请求拦截
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
-    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
+axios.interceptors.request.use((config: IAxiosConfig) => {
+    config.headers!['Content-Type'] = 'application/json;charset=UTF-8'
     //请求携带token
     const token: string = 'Bearer ' + store.state.token
-    token && (config.headers.Authorization = token)
+    token && (config.headers!.Authorization = token)
     //判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false) {
+    if (config.showLoading !== false) {
         ShowLoading()
     }
     return config
@@ -60,8 +60,8 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 })
 
 //路由响应拦截
-axios.interceptors.response.use((response: AxiosResponse) => {
-    if (response.config.headers.showLoading !== false) {
+axios.interceptors.response.use((response: IAxiosResponse) => {
+    if (response.showLoading !== false) {
         hideLoading();
     }
     const status = response.status;
@@ -79,7 +79,7 @@ axios.interceptors.response.use((response: AxiosResponse) => {
         ElMessage.error(response.data.msg)
         return Promise.reject(response.data)
     } else {
-        if (response.config.headers.showLoading !== false) {
+        if (response.showLoading !== true) {
             ElMessage.success(response.data.msg)
         }
         return response

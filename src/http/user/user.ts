@@ -1,7 +1,7 @@
 import request from "../request";
 
 const getUser = async () => {
-    return await request.get('/users/verify',{headers:{'showLoading':false}})
+    return await request.get('/users/verify',{showLoading:false})
 }
 
 const Login = async (params:any) => {
