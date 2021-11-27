@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { IAxiosConfig,IAxiosResponse } from '../type/types'
+import { IAxiosConfig } from '../type/types'
+import { AxiosResponse } from "axios"
 import { ElLoading, ElMessage } from 'element-plus'
 import store from './../store/index'
 
@@ -60,8 +61,9 @@ axios.interceptors.request.use((config: IAxiosConfig) => {
 })
 
 //路由响应拦截
-axios.interceptors.response.use((response: IAxiosResponse) => {
-    if (response.showLoading !== false) {
+axios.interceptors.response.use((response: AxiosResponse) => {
+    const config:IAxiosConfig = response.config
+    if (config.showLoading !== false) {
         hideLoading();
     }
     const status = response.status;
@@ -79,7 +81,7 @@ axios.interceptors.response.use((response: IAxiosResponse) => {
         ElMessage.error(response.data.msg)
         return Promise.reject(response.data)
     } else {
-        if (response.showLoading !== true) {
+        if (config.showLoading !== false) {
             ElMessage.success(response.data.msg)
         }
         return response
