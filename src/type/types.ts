@@ -4,10 +4,6 @@ interface IAxiosConfig extends AxiosRequestConfig {
     showLoading?:boolean
 }
 
-interface IAxiosResponse  extends AxiosResponse {
-    showLoading?:boolean
-}
-
 // 网络请求响应格式，T 是具体的接口返回类型数据
 interface CustomSuccessData<T> {
     code: number;
@@ -38,7 +34,6 @@ interface Put {
 export {
     CustomSuccessData,
     IAxiosConfig,
-    IAxiosResponse,
     Get,
     Post,
     Delete,
